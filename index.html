@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Pong with Mediapipe</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- MediaPipe dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="game-container">
+        <!-- Hidden video for camera feed -->
+        <video class="input_video" style="display: none;"></video>
+
+        <!-- Game Canvas -->
+        <canvas class="output_canvas" width="800" height="500"></canvas>
+
+        <!-- UI Overlays -->
+        <div class="score-board">
+            <div id="player-score">0</div>
+            <div id="ai-score">0</div>
+        </div>
+
+        <div id="start-screen" class="overlay active">
+            <h1>NEON PONG</h1>
+            
+            <div class="menu-container">
+                <div class="menu-panel options-panel">
+                    <button class="panel-toggle">
+                        <div class="toggle-left">
+                            <span class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></span>
+                            Oyun Ayarları
+                        </div>
+                        <span class="toggle-icon">▼</span>
+                    </button>
+                    
+                    <div class="panel-content">
+                        <div class="team-selection">
+                            <label>Oynayacağınız Takım</label>
+                            <div class="team-buttons">
+                                <button id="btn-left-team" class="team-btn selected">SOL TAKIM (Sol El)</button>
+                                <button id="btn-right-team" class="team-btn">SAĞ TAKIM (Sağ El)</button>
+                            </div>
+                        </div>
+                        
+                        <div class="speed-control">
+                            <label for="speed-slider">Başlangıç Top Hızı: <span id="speed-value">2</span></label>
+                            <input type="range" id="speed-slider" min="1" max="15" step="1" value="2">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-panel info-panel">
+                    <button class="panel-toggle">
+                        <div class="toggle-left">
+                            <span class="icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><path d="M17.32 5H6.68a4 4 0 0 0-3.978 3.59c-.006.052-.01.101-.017.152C2.604 9.416 2 14.456 2 16a3 3 0 0 0 3 3c1 0 1.5-.5 2-1l1.414-1.414A2 2 0 0 1 9.828 16h4.344a2 2 0 0 1 1.414.586L17 18c.5.5 1 1 2 1a3 3 0 0 0 3-3c0-1.545-.604-6.584-.685-7.258-.007-.05-.011-.1-.017-.151A4 4 0 0 0 17.32 5z"/></svg></span>
+                            Nasıl Oynanır?
+                        </div>
+                        <span class="toggle-icon">▼</span>
+                    </button>
+                    
+                    <div class="panel-content">
+                        <ul>
+                            <li><span class="step-num">1</span> <span>Tarayıcıda <strong>kamera izni</strong> verin.</span></li>
+                            <li><span class="step-num">2</span> <span>Eliniz tam görünecek şekilde kameradan biraz uzaklaşın.</span></li>
+                            <li><span class="step-num">3</span> <span>Seçtiğiniz takıma uygun <strong>elinizin ortasını (avuç içini)</strong> kullanarak raketi kontrol edin.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="start-action">
+                <p id="loading-text">Yapay Zeka Modelleri Yükleniyor... Kameraya izin verin.</p>
+                <button id="start-btn" disabled>OYUNA BAŞLA</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="developer-credit">
+        Developed by <a href="https://osmanbugrabolat.com.tr" target="_blank" rel="noopener noreferrer">Osman Buğra Bolat</a>
+    </div>
+
+    <script>
+        // Setup accordion toggles
+        document.querySelectorAll('.panel-toggle').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const panel = btn.closest('.menu-panel');
+                panel.classList.toggle('open');
+            });
+        });
+    </script>
+    <script src="tracker.js"></script>
+    <script src="game.js"></script>
+</body>
+
+</html>
