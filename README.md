@@ -24,18 +24,21 @@
 Modern web tarayıcıları, güvenlik politikaları (CORS & Secure Context) gereği web kamerasına erişim için yerel bir sunucu bağlantısı gerektirir. Bu yüzden HTML dosyasına çift tıklamak yerine yerel sunucu kullanmalısınız.
 
 1. Bilgisayarınızda [Node.js](https://nodejs.org/)'in kurulu olduğundan emin olun.
-2. Projeyi bilgisayarınıza klonlayın ve klasörün içine girin:
+2. Projeyi bilgisayarınıza klonlayın:
    ```bash
    git clone https://github.com/osmanbugrabolat/pong-with-mediapipe.git
+   ```
+3. Klonlanan klasörün içine girin:
+   ```bash
    cd pong-with-mediapipe
    ```
-3. Yerel sunucuyu başlatmak için şu komutu çalıştırın:
+4. Yerel sunucuyu başlatmak için şu komutu çalıştırın:
    ```bash
    npx serve
    ```
-4. Terminalde size verilen adresi (genellikle `http://localhost:3000`) tarayıcınızda açın.
-5. Tarayıcınızın sağ üst veya sol üst kısmında belirecek olan **Kamera İzni**ni onaylayın.
-6. Hızınızı, takımınızı seçin ve **OYUNA BAŞLA**'ya tıklayın!
+5. Terminalde size verilen adresi (genellikle `http://localhost:3000`) tarayıcınızda açın.
+6. Tarayıcınızın sağ üst veya sol üst kısmında belirecek olan **Kamera İzni**ni onaylayın.
+7. Hızınızı, takımınızı seçin ve **OYUNA BAŞLA**'ya tıklayın!
 
 ## Oynanış İpuçları
 
