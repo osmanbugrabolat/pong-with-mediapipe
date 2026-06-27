@@ -1,5 +1,7 @@
 # Neon Pong AI: Hand-Tracking Web Game
 
+**Canlı Demo:** [Buraya tıklayarak oyunu hemen tarayıcınızda oynayabilirsiniz!](https://osmanbugrabolat.github.io/pong-with-mediapipe/)
+
 **Neon Pong AI**, Google's Mediapipe el takibi teknolojisini kullanan, fütüristik neon tasarıma sahip modern bir web tabanlı Pong oyunudur. Oyunu klavye veya fare ile değil, doğrudan **el hareketlerinizle** web kamerası üzerinden oynarsınız!
 
 ![Oyun İçi Görüntü](game.png)
