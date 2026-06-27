@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+    <!-- Dark Background -->
+    <rect width="100" height="100" fill="#11141c" rx="20"/>
+    
+    <!-- Left Paddle (Cyan) -->
+    <rect width="15" height="50" x="15" y="25" fill="#0ff" rx="5"/>
+    
+    <!-- Right Paddle (Magenta) -->
+    <rect width="15" height="50" x="70" y="25" fill="#f0f" rx="5"/>
+    
+    <!-- Ball (White) -->
+    <circle cx="45" cy="50" r="10" fill="#fff"/>
+</svg>

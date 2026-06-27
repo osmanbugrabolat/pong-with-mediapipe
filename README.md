@@ -9,6 +9,8 @@
 ## Özellikler
 
 - **Yapay Zeka Destekli El Takibi:** Google Mediapipe sayesinde avuç içiniz anlık olarak tespit edilir ve raketiniz elinizle senkronize hareket eder.
+- **Kamera Mini-Ekranı:** Oyun başladıktan sonra ekranın sağ alt köşesinde beliren kamera penceresi ile kendi hareketlerinizi ve tespit edilen el noktalarını anlık olarak takip edebilirsiniz.
+- **Retro Ses Efektleri:** Web Audio API kullanılarak üretilen çarpma ve skor sesleriyle nostaljik atari deneyimini yaşayın. İstenirse menü üzerinden sesler tamamen kapatılabilir.
 - **Takım Seçimi & Akıllı Yönlendirme:** Başlangıçta oynamak istediğiniz takımı (Sol/Sağ) seçebilirsiniz. Seçiminize göre kamera ayna etkisini hesaba katarak doğru elinizi algılar. AI rakip ise otomatik olarak karşı tarafa geçer.
 - **Neon / Cyberpunk Tasarım:** Tamamen Vanilla CSS ile tasarlanmış cam efektli, karanlık temalı ve yüksek kaliteli parlamalara sahip interaktif oyun menüsü.
 - **Akıllı Rakip:** Topu takip eden ancak insanımsı bir hata payı barındıran bir yapay zeka. Ralliler uzadıkça heyecan artar, top hızlanır!
@@ -18,6 +20,7 @@
 
 - **HTML5 & CSS3:** Modern, duyarlı ve şık arayüz tasarımı.
 - **Vanilla JavaScript (ES6+):** Oyun döngüsü, çarpışma fizikleri ve uygulama mantığı.
+- **Web Audio API:** Performans dostu, dosya indirme gerektirmeyen tarayıcı tabanlı retro ses sentezleme.
 - **HTML5 Canvas:** Kesintisiz oyun çizimi, animasyonlar ve neon parlama efektleri.
 - **[Google Mediapipe](https://developers.google.com/mediapipe):** Kamera üzerinden anlık görüntü işleme ve iskelet tabanlı el takibi (Hand Tracking modeli).
 

@@ -1,4 +1,6 @@
 const videoElement = document.querySelector('.input_video');
+const cameraCanvas = document.querySelector('.camera_canvas');
+const cameraCtx = cameraCanvas.getContext('2d');
 const loadingText = document.getElementById('loading-text');
 const startBtn = document.getElementById('start-btn');
 const btnLeftTeam = document.getElementById('btn-left-team');
@@ -21,6 +23,19 @@ btnRightTeam.addEventListener('click', () => {
 });
 
 function onResults(results) {
+    // Draw the camera feed and landmarks to the small canvas
+    cameraCtx.save();
+    cameraCtx.clearRect(0, 0, cameraCanvas.width, cameraCanvas.height);
+    cameraCtx.drawImage(results.image, 0, 0, cameraCanvas.width, cameraCanvas.height);
+    
+    if (results.multiHandLandmarks) {
+        for (const landmarks of results.multiHandLandmarks) {
+            drawConnectors(cameraCtx, landmarks, HAND_CONNECTIONS, {color: '#00FF00', lineWidth: 2});
+            drawLandmarks(cameraCtx, landmarks, {color: '#FF0000', lineWidth: 1, radius: 2});
+        }
+    }
+    cameraCtx.restore();
+
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
         let targetHandIndex = -1;
         

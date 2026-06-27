@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Pong with Mediapipe</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
 
@@ -24,6 +25,8 @@
 
         <!-- Game Canvas -->
         <canvas class="output_canvas" width="800" height="500"></canvas>
+
+
 
         <!-- UI Overlays -->
         <div class="score-board">
@@ -57,6 +60,14 @@
                             <label for="speed-slider">Başlangıç Top Hızı: <span id="speed-value">2</span></label>
                             <input type="range" id="speed-slider" min="1" max="15" step="1" value="2">
                         </div>
+
+                        <div class="team-selection" style="margin-top: 15px;">
+                            <label>Oyun Sesleri</label>
+                            <div class="team-buttons">
+                                <button id="btn-sound-on" class="team-btn selected">AÇIK</button>
+                                <button id="btn-sound-off" class="team-btn">KAPALI</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -88,6 +99,11 @@
 
     <div class="developer-credit">
         Developed by <a href="https://osmanbugrabolat.com.tr" target="_blank" rel="noopener noreferrer">Osman Buğra Bolat</a>
+    </div>
+
+    <!-- Camera Feed Mini-map -->
+    <div class="camera-feed-container">
+        <canvas class="camera_canvas" width="320" height="240"></canvas>
     </div>
 
     <script>

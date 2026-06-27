@@ -26,6 +26,36 @@ const PADDLE_GLOW = '#0ff';
 const AI_GLOW = '#f0f';
 
 let score = { player: 0, ai: 0 };
+let soundEnabled = true;
+
+// Sound synthesis using Web Audio API
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioCtx = new AudioContext();
+
+function playTone(freq, type, duration, vol=0.1) {
+    if (!soundEnabled || audioCtx.state === 'suspended') return;
+    const oscillator = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    
+    oscillator.type = type;
+    oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    
+    gainNode.gain.setValueAtTime(vol, audioCtx.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+    
+    oscillator.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+    
+    oscillator.start();
+    oscillator.stop(audioCtx.currentTime + duration);
+}
+
+function playHitSound() { playTone(600, 'square', 0.1, 0.1); }
+function playWallSound() { playTone(400, 'square', 0.1, 0.1); }
+function playLoseSound() {
+    playTone(200, 'sawtooth', 0.3, 0.2);
+    setTimeout(() => playTone(150, 'sawtooth', 0.5, 0.2), 150);
+}
 
 let ball = {
     x: width / 2,
@@ -82,6 +112,7 @@ function update() {
 
     // Wall collision (top and bottom)
     if (ball.y <= BALL_SIZE || ball.y >= height - BALL_SIZE) {
+        playWallSound();
         ball.vy *= -1;
         // Keep ball inside bounds
         ball.y = ball.y <= BALL_SIZE ? BALL_SIZE : height - BALL_SIZE;
@@ -91,6 +122,7 @@ function update() {
     // Left paddle
     if (ball.x - BALL_SIZE <= 30 + PADDLE_WIDTH && ball.x - BALL_SIZE >= 20) {
         if (ball.y >= leftPaddleY - PADDLE_HEIGHT/2 && ball.y <= leftPaddleY + PADDLE_HEIGHT/2) {
+            playHitSound();
             ball.vx = Math.abs(ball.vx); // bounce right
             let hitPoint = ball.y - leftPaddleY;
             ball.vy = (hitPoint / (PADDLE_HEIGHT/2)) * ball.speed;
@@ -101,6 +133,7 @@ function update() {
     // Right paddle
     if (ball.x + BALL_SIZE >= width - 30 - PADDLE_WIDTH && ball.x + BALL_SIZE <= width - 20) {
         if (ball.y >= rightPaddleY - PADDLE_HEIGHT/2 && ball.y <= rightPaddleY + PADDLE_HEIGHT/2) {
+            playHitSound();
             ball.vx = -Math.abs(ball.vx); // bounce left
             let hitPoint = ball.y - rightPaddleY;
             ball.vy = (hitPoint / (PADDLE_HEIGHT/2)) * ball.speed;
@@ -110,6 +143,7 @@ function update() {
 
     // Scoring
     if (ball.x < -50) {
+        playLoseSound();
         if (pLeft) {
             score.ai++;
             aiScoreEl.innerText = score.ai;
@@ -124,6 +158,7 @@ function update() {
             gameRunning = true;
         }, 1000);
     } else if (ball.x > width + 50) {
+        playLoseSound();
         if (pLeft) {
             score.player++;
             playerScoreEl.innerText = score.player;
@@ -196,6 +231,9 @@ function loop() {
 }
 
 gameStartBtn.addEventListener('click', () => {
+    if (soundEnabled && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
     let pLeft = window.playerSide === 'left';
     
     // Swap scores in DOM if needed so player is always their color on their side
@@ -206,6 +244,13 @@ gameStartBtn.addEventListener('click', () => {
     }
 
     startScreen.classList.remove('active');
+    
+    // Show camera feed when game starts
+    const cameraContainer = document.querySelector('.camera-feed-container');
+    if (cameraContainer) {
+        cameraContainer.style.display = 'block';
+    }
+
     setTimeout(() => {
         resetBall(pLeft ? -1 : 1); // Serve to player first
         gameRunning = true;
@@ -214,3 +259,21 @@ gameStartBtn.addEventListener('click', () => {
 
 // Start rendering loop immediately (paddles will move even before start)
 loop();
+
+// Sound toggle listeners
+const btnSoundOn = document.getElementById('btn-sound-on');
+const btnSoundOff = document.getElementById('btn-sound-off');
+
+if (btnSoundOn && btnSoundOff) {
+    btnSoundOn.addEventListener('click', () => {
+        soundEnabled = true;
+        btnSoundOn.classList.add('selected');
+        btnSoundOff.classList.remove('selected');
+    });
+
+    btnSoundOff.addEventListener('click', () => {
+        soundEnabled = false;
+        btnSoundOff.classList.add('selected');
+        btnSoundOn.classList.remove('selected');
+    });
+}
