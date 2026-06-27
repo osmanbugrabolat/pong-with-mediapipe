@@ -7,9 +7,9 @@
 ## Özellikler
 
 - **Yapay Zeka Destekli El Takibi:** Google Mediapipe sayesinde avuç içiniz anlık olarak tespit edilir ve raketiniz elinizle senkronize hareket eder.
-- **Takım Seçimi & Akıllı Yönlendirme:** Başlangıçta oynamak istediğiniz takımı (Sol/Sağ) seçebilirsiniz. Seçiminize göre kamera ayna (mirror) etkisini hesaba katarak doğru elinizi algılar. AI (Yapay Zeka) rakip ise otomatik olarak karşı tarafa geçer.
-- **Neon / Cyberpunk Tasarım:** Tamamen Vanilla CSS ile tasarlanmış cam (glassmorphism) efektli, karanlık temalı ve yüksek kaliteli parlamalara sahip interaktif oyun menüsü.
-- **Akıllı Rakip:** Topu takip eden ancak insanımsı bir hata payı (zorluk eğrisi) barındıran bir yapay zeka. Ralliler uzadıkça heyecan artar, top hızlanır!
+- **Takım Seçimi & Akıllı Yönlendirme:** Başlangıçta oynamak istediğiniz takımı (Sol/Sağ) seçebilirsiniz. Seçiminize göre kamera ayna etkisini hesaba katarak doğru elinizi algılar. AI rakip ise otomatik olarak karşı tarafa geçer.
+- **Neon / Cyberpunk Tasarım:** Tamamen Vanilla CSS ile tasarlanmış cam efektli, karanlık temalı ve yüksek kaliteli parlamalara sahip interaktif oyun menüsü.
+- **Akıllı Rakip:** Topu takip eden ancak insanımsı bir hata payı barındıran bir yapay zeka. Ralliler uzadıkça heyecan artar, top hızlanır!
 - **Tam Kontrol:** Oyun başlamadan önce menü üzerinden topun başlangıç hızını ayarlayabilirsiniz.
 
 ## Kullanılan Teknolojiler
@@ -24,9 +24,10 @@
 Modern web tarayıcıları, güvenlik politikaları (CORS & Secure Context) gereği web kamerasına erişim için yerel bir sunucu bağlantısı gerektirir. Bu yüzden HTML dosyasına çift tıklamak yerine yerel sunucu kullanmalısınız.
 
 1. Bilgisayarınızda [Node.js](https://nodejs.org/)'in kurulu olduğundan emin olun.
-2. Terminal üzerinden projenin bulunduğu klasöre gidin:
+2. Projeyi bilgisayarınıza klonlayın ve klasörün içine girin:
    ```bash
-   cd /Users/osmanbugrabolat/Desktop/pong-with-mediapipe
+   git clone https://github.com/osmanbugrabolat/pong-with-mediapipe.git
+   cd pong-with-mediapipe
    ```
 3. Yerel sunucuyu başlatmak için şu komutu çalıştırın:
    ```bash
